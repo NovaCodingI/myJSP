@@ -10,7 +10,8 @@
 <body>
 
 <%
-	// 한글깨짐처리
+	// 한글깨짐처리 => web.xml에서 설정파일에서 설정
+	// 필터 한번에 일괄적으로 처리가 가능함!
 	request.setCharacterEncoding("UTF-8");
 
 	// 사용자가 요청한 값을 받아오는 getParameter
@@ -22,8 +23,6 @@
 	String intro = request.getParameter("intro");
 	String favoStr = "";
 	//out.print(Arrays.toString(favo));
-	
-	
 %>
 <ul>
 	<li>아이디 : <%= id %></li>

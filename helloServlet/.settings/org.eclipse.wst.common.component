@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="helloServlet">
+        
+    <wb-module deploy-name="myServlet">
+                
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+                
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
-        <property name="context-root" value="helloServlet"/>
-        <property name="java-output-path" value="/helloServlet/build/classes"/>
+                
+        <property name="java-output-path" value="/myServlet/build/classes"/>
+        <property name="context-root" value="myServlet"/>
+            
     </wb-module>
+    
 </project-modules>

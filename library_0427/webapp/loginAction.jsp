@@ -1,3 +1,4 @@
+<%@page import="com.utils.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="com.library.service.MemberService" %>
@@ -29,8 +30,13 @@
 	String id = request.getParameter("userid");
 	String pw = request.getParameter("userpw");
 	
-	// 아이디가 abc, 비밀번호가 123
-	// id != null && id.equals("abc") 널처리를 안하고싶다면 그 객체로 접근해서 "abc".
+	// out.print("saveYN : " + saveYN + "<br>");
+	
+	// 아이디 쿠키에 저장
+	String saveYN = request.getParameter("save_check");
+	if("Y".equals(saveYN)){
+		CookieManager.makeCookie(response, "userId", id, 60*60*24*7);
+	}
 	
 	// lib 이동
 	// Java Resources -> webapp/WEB-INF/lib
@@ -56,6 +62,8 @@
 	}
 	
 	System.out.println("member : " + member);
+	
+	
 	
 	%>
 

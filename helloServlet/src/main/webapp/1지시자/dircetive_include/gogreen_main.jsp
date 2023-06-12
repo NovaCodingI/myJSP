@@ -1,3 +1,4 @@
+<%@page import="utils.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -38,6 +39,10 @@
                 	-->
                 	
                	<%
+               		// 쿠키에 저장된 아이디가 있다면 아이디를 텍스트필드에 value 값으로 출력
+               		// 우리가 지정해준 이름 userId 읽어옵시다!
+			    	String userId = CookieManager.readCookie(request, "userId");
+               		
 			    	// 로그인 실패시 메세지 처리
 			    	String loginErr = request.getParameter("loginErr");
 			    	if("Y".equals(loginErr)){
@@ -71,7 +76,8 @@
 		    	<form action="./gogreenLogin.jsp" method="post">				    
                     <div class='loginbox'>
                         <div id='login'>
-                            <input type="text" name="userid" id="userid" placeholder='ID를 입력해주세요.' required="required">
+                            <input type="text" name="userid" id="userid" placeholder='ID를 입력해주세요.' required="required"
+                            						value = "<%=userId %>">
                             <input type="password" name="userpw" id="userpw" placeholder='PW를 입력해주세요.' required="required">
                         </div>
                         <div id='button'>
@@ -80,6 +86,9 @@
                     </div>
            
                     <div id='info'>
+                    	<!-- 선택되었을때만 서버에 넘어갑니다!
+                    			선택이 안되면 안넘어갑니다 선택안하고 값을 출력해보면 null이 출력 됩니다. -->
+                        <input type="checkbox" name="save_check" value="Y" <%=!userId.equals("") ? "checked" : "" %> >아이디 저장하기<br>
                         <a href="">회원가입</a>
                         <a href="">ID찾기</a>
                         <a href="">PW찾기</a>

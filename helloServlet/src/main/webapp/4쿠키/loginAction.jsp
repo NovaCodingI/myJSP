@@ -1,6 +1,9 @@
+<%@page import="dto.Member"%>
+<%@page import="dao.MemberDao"%>
 <%@page import="utils.CookieManager"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +30,9 @@
 	// name속성의 값을 매개값으로 넘겨주면 value속성의 값을 반환 합니다.
 	String id = request.getParameter("userid");
 	String pw = request.getParameter("userpw");
+	
+	MemberDao dao = new MemberDao();
+	Member member = dao.login(id, pw);
 	
 	// 아이디 저장 체크박스
 	String saveYN = request.getParameter("save_check");
@@ -59,10 +65,16 @@
 	// id != null && id.equals("abc") 널처리를 안하고싶다면 그 객체로 접근해서 "abc".
 	
 	// .equalsIgnoreCase(id) 대소문자 구문없는 메소드
-	if("abc".equals(id) && "123".equals(pw)){
+	// if("abc".equals(id) && "123".equals(pw)){
+		
+	// DB 조회 결과 id/pw가 일치하는 회원이 있으면 로그인 성공
+	if(member != null
+			&& !"".equals(member.getName())){
 		// 로그인 성공
+		
 		out.print("로그인 성공");
-		response.sendRedirect("login.jsp?name="+id);
+		// response.sendRedirect("login.jsp?name="+id); // 이렇게하면 대문자로 입력했을때 대문자가 나오네요?
+		response.sendRedirect("login.jsp?name="+member.getId()); // 이렇게하면 대문자로 입력해도 소문자로 나오죠?
 	%>
 		<!-- html을 출력 -->
 		<h1>로그인 성공</h1>

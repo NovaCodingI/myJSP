@@ -1,3 +1,6 @@
+-- 원래는 sql 파일은 통상적으로 webapp 상단에 위치하는것이 좋다
+
+-- 회원 테이블 생성
 create table member(
 id varchar2(10) PRIMARY KEY,
 pass varchar2(10) NOT NULL,
@@ -5,6 +8,7 @@ name varchar2(30) NOT NULL,
 regidate DATE DEFAULT SYSDATE NOT NULL
 );
 
+-- 게시판 테이블 생성
 CREATE TABLE board (
 num NUMBER PRIMARY KEY,
 title varchar2(200) not null,
@@ -28,8 +32,6 @@ create sequence seq_board_num
     nocycle 
     nocache; 
 
--- 게시판 테이블 생성
-
 -- 더미데이터 입력
 insert into member values ('musthave', 1234, '익준이', sysdate);
 insert into board (num, title, content, id, postdate, visitcount)
@@ -43,5 +45,27 @@ insert into board (num, title, content, id, postdate, visitcount)
         sysdate, 0);
         
 commit;
+
+--comment 추가
+comment on table board is '게시판';
+comment on column board.num is '일련번호';
+comment on column board.title is '제목';
+comment on column board.content is '내용';
+comment on column board.id is '작성자 아이디';
+comment on column board.postdate is '작성일';
+comment on column board.visitcount is '조회수';
+
+comment on column member is '회원';
+comment on column member.id is '아이디';
+comment on column member.pass is '비밀번호';
+comment on column member.name is '이름';
+comment on column member.regidate is '생성일';
+
+
+select * from board order by num desc;
+
+select count(*)
+from board
+order by num desc;
 
 

@@ -12,14 +12,21 @@
 <body>
 
 <%
-	BoardDao dao = new BoardDao();
-	List<Board> boardList = dao.getList();
-	
-	int totalCnt = dao.getTotalCnt();
-	
 	String searchField = request.getParameter("searchField");
 	String searchWord = request.getParameter("searchWord");
 	
+	BoardDao dao = new BoardDao();
+	// List<Board> boardList = dao.getList();
+	// The method getList(String, String) in the type BoardDao is not applicable for the arguments ()
+	List<Board> boardList = dao.getList(searchField, searchWord);
+	
+	int totalCnt = dao.getTotalCnt(searchField, searchWord);
+	
+	// 검색어가 null인 경우 빈문자열로 치환
+	searchWord = searchWord == null ? "" : searchWord;	
+			
+			
+	/*
 	if (searchField == null) {
 	        searchField = ""; // 또는 원하는 초기값으로 설정
     }
@@ -27,10 +34,11 @@
     if (searchWord == null) {
 	        searchWord = "";
     }
-    
-	// 검색어가 null이 아니면 검색 기능을 추가!!
-	out.print(searchWord);
-	out.print(searchField);
+    */
+
+    // 검색어가 null이 아니면 검색 기능을 추가!!
+	// out.print("검색어 : " + searchWord +"<br>");
+	// out.print("검색필드 : " + searchField);
 	
 
 %>
@@ -48,9 +56,9 @@
 	<tr>
 		<td align="center">
 			<select name="searchField">
-				<option value="title" <%= "title".equals(searchField) ? "selected" : "")) %>>제목</option>
-				<option value="content" <% if(searchField.equals("content")) { %>selected<% } %>>내용</option>
-				<option value="title content" <% if(searchField.equals("title content")) { %>selected<% } %>>제목+내용</option>
+				<option value="title">제목</option>
+				<option value="content">내용</option>
+				<option value="title content">제목+내용</option>
 			</select>
 			<input type="text" name="searchWord" value="<%=searchWord%>">
 			<input type="submit" value="검색하기">
@@ -83,7 +91,7 @@
 %>
 	<tr>
 		<td><%=board.getNum() %></td>
-		<td><%=board.getTitle() %></td>
+		<td><a href="View.jsp?num=<%=board.getNum()%>"><%=board.getTitle()%></a></td>
 		<td><%=board.getId() %></td>
 		<td><%=board.getViscount() %></td>
 		<td><%=board.getPostdate() %></td>
@@ -93,14 +101,19 @@
 	}
 }
 %>
+
 </table>
+<%
+if(session.getAttribute("UserId") != null){
+%>
 <table border="1" width='90%'>
 	<tr>
 		<td align="right">
-			<input type="submit" value="글쓰기">
+			<input type="button" value="글쓰기" onclick="location.href='Write.jsp'">
 		</td>
 	</tr>
 </table>
+<% } %>
 
 
 </body>

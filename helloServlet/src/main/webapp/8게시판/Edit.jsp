@@ -14,7 +14,7 @@
             location.href = '../6세션/Board.jsp';
         }
     }
-    <!--
+    <!--	
     function checkForm() {
         var title = document.getElementsByName("title")[0].value;
         var content = document.getElementsByName("content")[0].value;

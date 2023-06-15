@@ -11,7 +11,7 @@
     
     <%= request.getAttribute("LoginErrMsg") == null ?
     			"" : request.getAttribute("LoginErrMsg")%>
-    
+    	
     	
 <!--
 	1. 로그인 성공시 로그인폼을 화면에 보여주지 않음

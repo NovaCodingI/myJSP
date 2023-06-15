@@ -33,7 +33,7 @@
 	        onsubmit="return validateForm(this);">
 	        아이디 : <input type="text" name="user_id" required="required"/><br />
 	        패스워드 : <input type="password" name="user_pw" required="required"/><br />
-	        <input type="submit" value="로그인하기" />
+	        <input type="submit" value="로그인하기"/>
 	    </form>
 		
 	<%			

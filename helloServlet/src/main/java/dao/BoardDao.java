@@ -245,6 +245,12 @@ public class BoardDao {
 		return res;
 	}
 	
+	
+	/**
+	 * 게시물 삭제하기
+	 * @param num
+	 * @return
+	 */
 	public int delete(String num) {
 		int res = 0;
 		String sql = "DELETE FROM board WHERE num = ?";
@@ -263,5 +269,57 @@ public class BoardDao {
 		}
 				
 		return res;
+	}
+	
+	
+	/**
+	 * 게시물 수정하기
+	 * @param board
+	 * @return
+	 */
+	public int update(Board board) {
+		int res = 0;
+		
+		String sql = "update board set title=?, content=? where num=?";
+		
+		// 분할해서 쿼리 안먹습니다. 상단에 있는 res 반환 값만 먹어요 그러므로 따로 추가 해줘야합니다.
+//		 String sql = "update board set content=? where num=?";
+		// sql +=  "update board set content=? where num=?";
+//		 String sql2 =  "update board set title=? where num=?";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement psmt = conn.prepareStatement(sql);){
+				// PreparedStatement psmt2 = conn.prepareStatement(sql2);){
+			
+			// close()가 있는 객체만 try(안에 들어올수있습니다.)
+			// conn.close();
+			// psmt.close();
+			
+			// ? 로 했다면 세팅해줘야겠지요
+			
+			psmt.setString(1, board.getTitle());
+			psmt.setString(2, board.getContent());
+			psmt.setString(3, board.getNum());
+			res = psmt.executeUpdate();
+			
+			/*
+			// 같은값으로 psmt와 sql로 받아온다면 상단에 있는 res 값만 반환합니다
+			psmt.setString(1, board.getContent());
+			psmt.setString(2, board.getNum());
+			res = psmt.executeUpdate();
+			
+			// insert, update, delete 실행 후 몇건이 처리 되었는지 반환
+			
+			psmt2.setString(1, board.getTitle());
+			psmt2.setString(2, board.getNum());
+			res += psmt2.executeUpdate();
+			*/
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return res;
+		
 	}
 }

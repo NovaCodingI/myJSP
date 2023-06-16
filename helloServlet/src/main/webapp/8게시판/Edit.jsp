@@ -14,7 +14,11 @@
             location.href = '../6세션/Board.jsp';
         }
     }
+<<<<<<< master
     <!--	
+=======
+    
+>>>>>>> 551f979 20230615 게시판 만들기
     function checkForm() {
         var title = document.getElementsByName("title")[0].value;
         var content = document.getElementsByName("content")[0].value;
@@ -26,7 +30,6 @@
         
         return true; // 전송 실행
     }
-    -->
 </script>
 <body>
 <jsp:include page="../6세션/Link.jsp" />

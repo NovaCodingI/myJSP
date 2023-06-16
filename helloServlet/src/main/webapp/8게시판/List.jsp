@@ -1,3 +1,4 @@
+<%@page import="dto.PageDto"%>
 <%@page import="dto.Criteria"%>
 <%@page import="dto.Board"%>
 <%@page import="java.util.List"%>
@@ -22,6 +23,11 @@
 	Criteria criteria = new Criteria(searchField, searchWord, pageNo);
 	
 	NewBoardDao dao = new NewBoardDao();
+	int totalCnt = dao.getTotalCnt(criteria);
+	
+	// 확인용
+	out.print("총건수 : " + totalCnt);
+	
 	
 	// The method getList() in the type NewBoardDao is not applicable for the arguments (Criteria)
 	// public List<Board> getList(Criteria criteria){ 매개변수로 Criteria criteria를 받아준다
@@ -39,7 +45,8 @@
 	<h1>new</h1>
     <h2>목록 보기(List)</h2>
     <!-- 검색폼 --> 
-    <form method="get">  
+    <form method="get" name='searchForm'>
+    <input type='text' name='pageNo' value='<%=criteria.getPageNo()%>'> 
     <table border="1" width="90%">
     <tr>
         <td align="center">
@@ -77,7 +84,7 @@
         <tr align="center">
             <td><%=board.getNum() %></td>  <!--게시물 번호-->
             <td align="left">  <!--제목(+ 하이퍼링크)-->
-                <a href="View.jsp?num=<%=board.getNum()%>"><%=board.getTitle() %></a> 
+                <a href="View.jsp?num=<%=board.getNum()%>&pageNo=<%=criteria.getPageNo()%>"><%=board.getTitle() %></a> 
             </td>
             <td align="center"><%=board.getId() %></td>          <!--작성자 아이디-->
             <td align="center"><%=board.getViscount() %></td>  <!--조회수-->
@@ -100,5 +107,21 @@
         </tr>
     </table>
     <%} %>
+    <!-- 페이지블럭 생성 시작
+    	- 총건수
+    	- 쿼리수정
+    	- form이 submit 될 수 있도록 form의 이름을 searchForm으로 지정하고
+    	- pageNo 필드를 생성
+   	-->
+    <%
+    	PageDto pageDto = new PageDto(totalCnt, criteria);
+    %>
+    <table border="1" width='90%'>
+	<tr>
+		<td align="center">
+			<%@include file="../9페이지/PageNavi.jsp" %>
+		</td>
+	</tr>
+</table>
 </body>
 </html>

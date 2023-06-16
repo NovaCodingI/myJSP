@@ -66,6 +66,22 @@
 	<session-config>
 		<session-timeout>20</session-timeout>
 	</session-config>
+	
+	<!-- 필터를 활용한 한글 설정 -->
+	<filter>
+	    <filter-name>SetCharacterEncodingFilter</filter-name>
+	    <filter-class>org.apache.catalina.filters.SetCharacterEncodingFilter</filter-class>
+	    <init-param>
+	    	<param-name>encoding</param-name>
+	    	<param-value>utf-8</param-value>
+	    </init-param>
+	</filter>
+	
+	<filter-mapping>
+	    <filter-name>SetCharacterEncodingFilter</filter-name>
+	    <!-- /* *은 모든 url에 대해 매핑해주는겁니다! -->
+	    <url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 
 </web-app>

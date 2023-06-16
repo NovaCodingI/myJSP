@@ -4,8 +4,8 @@ public class Criteria {
 
 	// 검색과 페이징이 사용될 객체입니다.
 	
-	private String searchField; // 검색조건
-	private String searchWord; // 검색어
+	private String searchField=""; // 검색조건
+	private String searchWord=""; // 검색어
 	
 	// pageNo와 amount로 startNo와 endNo가 결정된다.
 	int pageNo = 1; // 요청한 페이지 번호
@@ -18,6 +18,8 @@ public class Criteria {
 	
 	// pageNo만 올수도 있지요?
 	// pageNo가 입력이 되었으면
+	
+	
 	public Criteria(int pageNo) {
 		
 		if(pageNo > 0) {
@@ -43,6 +45,23 @@ public class Criteria {
 		}
 	}
 	
+	
+	public Criteria(String searchField, String searchWord, String pageNoStr) {
+		if(searchWord != null) {
+			this.searchField = searchField;
+			this.searchWord = searchWord;
+		}
+		
+		if(pageNoStr != null) {
+			pageNo = Integer.parseInt(pageNoStr);
+		if(pageNo > 0) {
+			endNo = pageNo * amount;
+			startNo = (pageNo * amount) - (amount - 1);
+		} else {
+			pageNo = 1;
+		}
+	  }
+	}
 	
 	
 	public String getSearchField() {

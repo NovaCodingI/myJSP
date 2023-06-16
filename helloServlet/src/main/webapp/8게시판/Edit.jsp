@@ -1,3 +1,5 @@
+<%@page import="dto.Board"%>
+<%@page import="dao.NewBoardDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
@@ -6,6 +8,10 @@
 <head>
 <meta charset="UTF-8">
 <title>회원제 게시판</title>
+<%
+	NewBoardDao dao = new NewBoardDao();
+	Board board = dao.selectOne(request.getParameter("num"));
+%>
 </head>
 <script>
     function confirmRedirect() {
@@ -14,11 +20,7 @@
             location.href = '../6세션/Board.jsp';
         }
     }
-<<<<<<< master
-    <!--	
-=======
-    
->>>>>>> 551f979 20230615 게시판 만들기
+
     function checkForm() {
         var title = document.getElementsByName("title")[0].value;
         var content = document.getElementsByName("content")[0].value;
@@ -34,18 +36,21 @@
 <body>
 <jsp:include page="../6세션/Link.jsp" />
 <h2>회원제 게시판 - 수정하기(Edit)</h2>
-<form onsubmit="return checkForm();">
+<form action="EditProcess.jsp" method="post">
+ 	<input type="text" name="num" value="<%=board.getNum() %>" onsubmit="return checkForm()"/>
+<!-- < form onsubmit="return checkForm();"> 혼자 연습해본거 -->
     <table border="1" width="90%">
         <tr>
             <td>제목</td>
             <td>
-                <input type="text" name="title" style="width: 90%;"/> 
+                <input type="text" name="title" style="width: 90%;"
+                			value="<%=board.getTitle() %>"/> 
             </td>
         </tr>
         <tr>
             <td>내용</td>
             <td>
-                <textarea name="content" style="width: 90%; height: 100px;"></textarea>
+                <textarea name="content" style="width: 90%; height: 100px;"><%=board.getContent().replace("\r\n", "<br>") %></textarea>
             </td>
         </tr>
         <tr>

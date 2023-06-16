@@ -201,5 +201,38 @@ public class NewBoardDao {
 		}
 		
 	}
+	
+	
+	
+	public int getTotalCnt(Criteria criteria) {
+		int totalCnt = 0;
+		
+		String sql = "select count(*) "
+				+ "from board ";
+			
+			if(criteria.getSearchWord() != null && !"".equals(criteria.getSearchWord())) {
+			
+			sql += "where " + criteria.getSearchField() + " like '%" + criteria.getSearchWord() + "%'" ;
+			
+			}
+		
+			sql	+= "order by num desc";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement psmt = conn.prepareStatement(sql);) {
+			ResultSet rs = psmt.executeQuery();
+			if(rs.next()) {
+				totalCnt = rs.getInt(1); // 첫번째 컬럼의 값을 반환
+			}
+				
+			
+			rs.close();
+		} catch (SQLException e) {
+			System.err.println("총 게시물의 수를 조회 하던중 예외가 발생하였습니다.");
+			e.printStackTrace();
+		}
+		
+		return totalCnt;
+	}
 
 }

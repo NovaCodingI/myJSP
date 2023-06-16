@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import common.DBConnPool;
 import dto.Board;
+import dto.Criteria;
 
 /**
  * 남의것 복사할때 주석까지 가져갈셈이야??
@@ -89,15 +90,16 @@ public class BoardDao {
 	 * 게시물의 총 갯수를 반환
 	 * @return 게시물의 총 갯수
 	 */
-	public int getTotalCnt(String searchField, String searchWord) {
+	// public int getTotalCnt(String searchField, String searchWord) {
+	public int getTotalCnt(Criteria criteria) {
 		int totalCnt = 0;
 		
 		String sql = "select count(*) "
 				+ "from board ";
 			
-			if(searchWord != null && !"".equals(searchWord)) {
+			if(criteria.getSearchWord() != null && !"".equals(criteria.getSearchWord())) {
 			
-			sql += "where " + searchField + " like '%" + searchWord + "%'" ;
+			sql += "where " + criteria.getSearchField() + " like '%" + criteria.getSearchWord() + "%'" ;
 			
 			}
 		
@@ -106,16 +108,15 @@ public class BoardDao {
 		try (Connection conn = DBConnPool.getConnection();
 				PreparedStatement psmt = conn.prepareStatement(sql);) {
 			ResultSet rs = psmt.executeQuery();
-			rs.next();
-			totalCnt = rs.getInt(1); // 첫번째 컬럼의 값을 반환
+			if(rs.next()) {
+				totalCnt = rs.getInt(1); // 첫번째 컬럼의 값을 반환
+			}
 			
 			rs.close();
 		} catch (SQLException e) {
 			System.err.println("총 게시물의 수를 조회 하던중 예외가 발생하였습니다.");
 			e.printStackTrace();
 		}
-		
-		
 		
 		return totalCnt;
 	}
@@ -301,7 +302,9 @@ public class BoardDao {
 			psmt.setString(2, board.getContent());
 			psmt.setString(3, board.getNum());
 			res = psmt.executeUpdate();
-			
+			System.out.println(sql);
+			System.out.println(res);
+			System.out.println(board.getNum());
 			/*
 			// 같은값으로 psmt와 sql로 받아온다면 상단에 있는 res 값만 반환합니다
 			psmt.setString(1, board.getContent());
@@ -321,5 +324,59 @@ public class BoardDao {
 		
 		return res;
 		
+	}
+	// 스트링 빌더나 어펜드? 붙여주는게 좋음 += 은 좋은 방식은 아닙니다
+	// 쿼리는 외부파일로 빠질거기때문에 방식 배우는중입니다.
+	public List<Board> getListPage(Criteria criteria) {
+		List<Board> boardList = new ArrayList<>();
+		
+		// 순서대로 작성하신분은 오류가 날수있습니다. rn을 뒤로 붙여주면 오류가 안납니다! 순서상
+		// String sql = "select rownum rn, board.* "
+		String sql = ""
+				+ " select * from ( "
+				
+				+ " select t.*, rownum rn "
+					+ " from ( SELECT * FROM board ";
+		
+		// 검색어가 입력 되었으면 검색 조건을 추가 합니다.
+		if(criteria.getSearchWord() != null && !"".equals(criteria.getSearchWord())) {
+			
+			sql += " where "+ criteria.getSearchField() +" like '%"+ criteria.getSearchWord() +"%'" ;
+		}
+		
+		sql += " order by num desc ";
+		
+		sql += " ) t ) "
+			+ " where rn between "
+			+ criteria.getStartNo()
+			+ " and "
+			+ criteria.getEndNo();
+				
+		// 검색조건 추가
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement psmt = conn.prepareStatement(sql);
+				) {
+			ResultSet rs = psmt.executeQuery();
+			
+			// 게시글의 수 만큼 반복 하기위해 rs.next() List에!
+			while(rs.next()) {
+				// 게시물의 한행을 DTO에 저장
+				Board board = new Board();
+				
+				board.setNum(rs.getString("num"));
+				board.setTitle(rs.getString("title"));
+				board.setContent(rs.getString("content"));
+				board.setId(rs.getString("id"));
+				board.setPostdate(rs.getString("postdate"));
+				board.setViscount(rs.getString("visitcount"));
+				
+				boardList.add(board);
+				
+			}
+		} catch (SQLException e) {
+			System.err.println("게시물 조회 중 예외 발생");
+			e.printStackTrace();
+		}
+		return boardList;
 	}
 }

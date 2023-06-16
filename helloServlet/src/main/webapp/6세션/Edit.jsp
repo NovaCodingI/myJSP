@@ -37,11 +37,12 @@
 	}
 </script>
 <body>
-
 <h2>수정 화면</h2>
 <!-- submit이 작동하기 위해서는 form태그가 있어야함 reset도 마찬가지 -->
 <form action="EditProcess.jsp" method="post">
-	<input type = "text" value="<%=num %>" name="num">
+	<input type = "hidden" value="<%=num %>" name="num" >
+	<!-- <input type = "text" value="<%=num %>" name="num" > -->
+	<!-- text방식으로 하면 화면에 나오므로 hidden방식으로 처리하면 화면에 나오지않고 form에 parameter값을 전송할수있습니다 -->
 	<table border="1px" width="90%">
         <tr>
             <td>번호</td>

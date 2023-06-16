@@ -56,9 +56,17 @@
         <tr>
             <td colspan="4" align="center">
             
-                <button type="button">수정하기</button>
+                <button type="button" onclick="location.href='Edit.jsp?num=<%=request.getParameter("num")%>'">수정하기</button>
                 <button type="button">삭제하기</button> 
-                <button type="button">목록 보기</button>
+                <%
+                String pageNo ="1";
+                // out.print(request.getParameter("pageNo"));
+                if(request.getParameter("pageNo") != null)
+                	pageNo = request.getParameter("pageNo");
+                
+                // out.print("pageNo : " + pageNo);
+                %>
+                <button type="button" onclick="location.href='List.jsp?pageNo=<%=pageNo%>'">목록 보기</button>
             </td>
         </tr>
     </table>

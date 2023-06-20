@@ -2,6 +2,7 @@
 <%@page import="dto.PageDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,6 +18,30 @@
 	- 이전 버튼을 출력할지 여부 (boolean 타입)
 	- 다음 버튼을 출력할지 여부 (boolean 타입)
 -->
+
+<%
+	// 확인용
+	// PageDto pageDto = new PageDto(300, new Criteria(2));
+%>
+
+<!-- 영역에 저장 -->
+<c:set var="pageDto" value="<%=pageDto %>"></c:set>
+<c:if test="${ pageDto.prev }">
+	<!-- ""안에 들어가는부분이 변수들어가는 부분입니다. -->
+	<a href='List.jsp?pageNo="+(pageDto.getStartNo()-1)+"'> 이전 </a>
+	<a href='List.jsp?pageNo=${ pageDto.startNo-1 }'> < </a>
+</c:if>
+
+<c:forEach begin="${ pageDto.startNo }" end="${ pageDto.endNo }" var="i">
+	<a href='List.jsp?pageNo=${ i }'> ${ i }  </a>
+</c:forEach>
+	
+<c:if test="${ pageDto.next }">
+	<!-- ""안에 들어가는부분이 변수들어가는 부분입니다. -->
+	<a href='List.jsp?pageNo="+(pageDto.getEndNo()+1)+"'> 다음 </a>
+	<a href='List.jsp?pageNo=${ pageDto.endNo+1 }'> > </a>
+	
+</c:if>
 <%
 	/*
 	// 매개변수를 넣어주세요
@@ -35,13 +60,14 @@
 	// 공통으로 사용하는 PageNavi인데 href=를 사용하여 페이지를 전환하게 되면
 	// 공용으로 사용하는데 있어 어려움이 있다
 	
-	
 	if(pageDto.isPrev()){
 		// 시작페이지번호가 1보다 큰경우 이전버튼을 출력
 		// 태그를 링크로 가져가게되면 검색어 할때 불편합니다.
 		out.print("<a href='List.jsp?pageNo="+(pageDto.getStartNo()-1)+"'>");
 		out.print("<");
 		out.print(" </a>");
+		
+		// <a href='List.jsp?pageNo="+(pageDto.getStartNo()-1)+"'> < </a>
 	}
 	for(int i = pageDto.getStartNo(); i<= pageDto.getEndNo(); i++){
 		out.print("<a href='List.jsp?pageNo="+i+"'>");

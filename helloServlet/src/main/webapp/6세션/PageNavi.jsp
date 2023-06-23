@@ -16,6 +16,9 @@
 		document.searchForm.submit();
 	}
 </script>
+<!-- 영역에 저장 -->
+<c:set var="PageDto" value="${ MVCPageDto }"></c:set>
+
 <%
 	
 	/*

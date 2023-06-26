@@ -55,7 +55,7 @@ ${ list }
 				<td>${ book.author }</td>
 				<td>${ book.rentyn }</td>
 			</tr>
-		</c:forEach>	
+		</c:forEach>
 	</c:if>	
 	
 </table>

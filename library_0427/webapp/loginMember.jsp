@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 	 <%
     	if(session.getAttribute("member") != null){
     		Member m = (Member)session.getAttribute("member"); 

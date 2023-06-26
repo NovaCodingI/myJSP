@@ -9,7 +9,6 @@
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
 <!-- resolved 에러가 났다면 java build path 에 에러가 난 파일이있는지 확인 후 remove 후 재실행 해보거라 -->
 				<%
 				
@@ -34,7 +33,8 @@
 			    		
 			    %>	
 			<aside id='rightside'>
-				<form action="./loginAction.jsp" method="post">				    
+				<%-- <form action="./loginAction.jsp" method="post">--%>				    
+				<form action="./login/LoginAction.do" method="post">				    
                     <div class='loginbox'>
                         <div id='login'>
                             <input type="text" name="userid" id="userid" placeholder='ID를 입력해주세요.' required="required"

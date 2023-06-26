@@ -32,7 +32,7 @@
 
 <body>
 
-
+	<!-- 조회수 증가 - 상세보기, 파일다운로드/수정하기  --> 
 	
 	<h2>MVC 모델2 게시판</h2>
     <h4> 총 게시물 수 : ${ TCnt }</h4>
@@ -110,7 +110,12 @@
 						<td> ${ row.downcount }</td>
 						<td> ${ row.visitcount }</td>
 						<td>
-						<a href="">[다운로드]</a>
+							<!-- 첨부파일이 있으면 첨부파일 다운로드 -->
+							<c:if test="${not empty row.ofile }">
+							<a href="../mvcboard/download.do?ofile=${row.ofile}&sfile=${row.sfile}">
+							[다운로드]
+							</a>
+							</c:if>
 						</td>
 					</tr>
 				</c:forEach>

@@ -11,6 +11,7 @@
 <title>Insert title here</title>
 </head>
 <body>
+<!-- 컨트롤러로 만들었기때문에 필요없는 jsp 파일이 되었다. LoginAction.java 참조 -->
 
 	<%
 		int i = 0;
@@ -49,6 +50,8 @@
 		session.setAttribute("member", member);
 		
 		if("admin".equals(member.getId())){
+			// 세션에다가 setAttribute 해봐요
+			session.setAttribute("adminYN", "Y");
 			// 관리자 페이지 호출
 			response.sendRedirect("loginAdmin.jsp");
 		} else {

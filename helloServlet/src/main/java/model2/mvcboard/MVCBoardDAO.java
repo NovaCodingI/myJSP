@@ -291,5 +291,34 @@ public class MVCBoardDAO {
 		
 		return res;
 	}
+
+	public int insert(MVCBoardDTO dto) {
+		int res = 0;
+		
+		String sql = "insert into mvcboard "
+				+ "		(idx, name, title, content, pass, ofile, sfile) "
+				+ "    values (SEQ_NUMBER_MVC.nextval, ?, ?, ?, ?, ?, ?) ";
+		
+		try (Connection conn = DBConnPool.getConnection();
+				PreparedStatement psmt = conn.prepareStatement(sql);) {
+			
+			psmt.setString(1, dto.getName());
+			psmt.setString(2, dto.getTitle());
+			psmt.setString(3, dto.getContent());
+			psmt.setString(4, dto.getPass());
+			psmt.setString(5, dto.getOfile());
+			psmt.setString(6, dto.getSfile());
+			
+			System.out.println(dto.getTitle());
+			
+			res = psmt.executeUpdate();
+				
+		} catch (SQLException e) {
+			System.err.println("게시물 입력중 예외 발생");
+			e.printStackTrace();
+		}
+		
+		return res;
+	}
 	
 }

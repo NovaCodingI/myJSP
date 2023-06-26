@@ -1,6 +1,7 @@
 <%@page import="com.library.vo.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-	 <%
+<%@ include file="../common/header.jsp" %>
+
+	<%
     	// 세션에 저장된 멤버 객체로 부터 아이디를 출력합니다.
     	if(session.getAttribute("member") != null){
     		Member m = (Member)session.getAttribute("member"); 

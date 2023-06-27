@@ -1,23 +1,49 @@
 package com.library.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.library.dao.BookDao;
 import com.library.vo.Book;
+import com.library.vo.Criteria;
+import com.library.vo.PageDto;
 
 public class BookService {
 	BookDao dao = new BookDao();
 	
 	/**
 	 * 책 리스트를 조회 합니다.
+	 * @param cri 
 	 * @return
 	 */
-	public List<Book> getList(){
-		List<Book> list = dao.getList();
-		for(Book book : list) {
-			System.out.println(book);
-		}
-		return list;
+//	public List<Book> getList(Criteria cri){
+	// 여러가지 타입을 저장하고싶을때 map 사용 Object★
+	public Map<String, Object> getList(Criteria cri){
+		// dao 리턴하면 되는거 아니에요? 라는 생각은 안되요. 이해해요?
+		// Map으로 바꾸면 List에 대한 모든걸 조회할수있게 만들어요
+		Map<String, Object> map = new HashMap<>();
+		
+		// 리스트 조회 할땐 매개변수에 조건 넣어줘야돼요
+		// List<Book> list = dao.getList(cri);
+		List<Book> list = dao.getListPage(cri);
+		System.out.println("list 잘나와요 : " + list);
+		
+		// 총 건수 조회 할땐 매개변수에 조건 넣어주세요
+		int totalCnt = dao.getTotalCnt(cri);
+		
+		// 페이지DTO
+		PageDto pageDto = new PageDto(totalCnt, cri);
+		
+		map.put("list", list);
+		map.put("totalCnt", totalCnt);
+		map.put("pageDto", pageDto);
+		
+//		List<Book> list = dao.getList();
+//		for(Book book : list) {
+//			System.out.println(book);
+//		}
+		return map;
 	}
 
 	/**
@@ -34,8 +60,11 @@ public class BookService {
 		}
 	}
 
-	public void delete(int no) {
-		int res = dao.delete(no);
+	public int delete(String noStr) {
+		int res = dao.delete(noStr);
+		return res;
+	}
+	/*
 		if(res>0) {
 			System.out.println(res+"건 삭제되었습니다.");
 		} else {
@@ -43,6 +72,7 @@ public class BookService {
 			System.err.println("관리자에게 문의 해주세요");
 		}
 	}
+	*/
 
 	public void rentBook(int bookNo) {
 		// 대여가능한 도서인지 확인

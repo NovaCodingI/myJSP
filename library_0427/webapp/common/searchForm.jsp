@@ -13,17 +13,19 @@
     <!-- 페이지 번호 -->
     <%-- <input type='text' name='pageNo'> --%>
     <input type='hidden' name='pageNo' value="${param.pageNo}" />
+    <input type='hidden' name='delNo' />
+    <input type='hidden' name='insertNo' />
+    <input type="text" id="title" name="title" placeholder="도서명">
+	<input type="text" id="author" name="author" placeholder="작가명">
+    
     
     <table border="1" width="90%" >
     <tr>
         <td align="center">
-        	<%-- 확인해보기
-        	searchField : [${ param.searchField }]
-        	비교 결과  : [${ param.searchField eq "content" }]
-        	--%> 
             <select name="searchField">
-                <option value="title" ${ param.searchField eq "title" ? "selected" : ""} >제목</option> 
-                <option value="content" ${ param.searchField eq "content" ? "selected" : ""} > 내용 </option>
+                <option value="title" ${ param.searchField eq "title" ? "selected" : ""} >도서명</option>
+                
+                <option value="author" ${ param.searchField eq "author" ? "selected" : ""} > 작가명 </option>
             </select>
             <input type="text" name="searchWord" value="${param.searchWord}" />
             <input type="submit" value="검색하기" />

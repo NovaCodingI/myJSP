@@ -5,6 +5,12 @@ public class Book {
 	private String title;	// 도서명
 	private String rentyn;	// 도서 대여여부
 	private String author;	// 작가
+	private String regdate; // 작성일
+	
+	
+	public Book() {
+		
+	}
 	
 	// 도서를 추가할 경우 도서명과 작가명만 알고 있으면 생성 가능
 	public Book(String title, String author) {
@@ -22,6 +28,15 @@ public class Book {
 		this.author = author;
 	}
 	
+	public Book(int no, String title, String rentyn, String author, String regdate) {
+		this.no = no;
+		this.title = title;
+		this.rentyn = rentyn;
+		this.author = author;
+		this.regdate = regdate;
+	}
+
+
 	@Override
 	public String toString() {
 		String rentYNStr = "";
@@ -59,5 +74,13 @@ public class Book {
 	}
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+
+	public String getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(String regdate) {
+		this.regdate = regdate;
 	}
 }

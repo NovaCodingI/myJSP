@@ -24,7 +24,6 @@
         <td align="center">
             <select name="searchField">
                 <option value="title" ${ param.searchField eq "title" ? "selected" : ""} >도서명</option>
-                
                 <option value="author" ${ param.searchField eq "author" ? "selected" : ""} > 작가명 </option>
             </select>
             <input type="text" name="searchWord" value="${param.searchWord}" />

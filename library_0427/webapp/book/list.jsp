@@ -3,14 +3,14 @@
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="../css/style.css">
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="../css/style.css">
 <style type="text/css">
 </style>
 <script type="text/javascript">
-
 	let message = "${message}";
 	if(message != null && "" != message){
 		alert(message);
@@ -36,6 +36,7 @@
 		
 	}
 	
+	/* 혼자해보다가 안된것
 	function insertBook() {
 		  let title = document.getElementById("title").value; // 도서명 입력 필드에서 값 가져오기
 		  let author = document.getElementById("author").value; // 작가명 입력 필드에서 값 가져오기
@@ -47,12 +48,11 @@
 		  form.author.value = author;
 		  form.submit();
 	}
-
+	*/
 </script>
-</head>
-
-<body>
 <%@include file="/common/header.jsp" %>
+</head>
+<body>
 
 <h2>도서목록</h2>
 총건수 : ${ map.totalCnt }건
@@ -60,7 +60,6 @@ ${ list }
 
 <!-- 검색폼 시작 -->
 <%@include file="/common/searchForm.jsp" %>
-
 <!-- 검색폼 끝 -->
 
 <!-- 목록출력 -->
@@ -69,7 +68,7 @@ ${ list }
 	<tr>
 		<td colspan="6" class="center">
 		<!-- 어드민 계정인 경우 등록, 삭제 버튼을 출력 -->
-		<button onclick="insertBook()">도서등록</button>
+		<button onclick="location.href='./write.book'">도서등록</button>
 		<button onclick="deleteBook()">도서삭제</button>
 		</td>
 	</tr>
@@ -107,7 +106,6 @@ ${ list }
 				</td>
 				<td>${ book.author }</td>
 				<td>${ book.rentyn }</td>
-				<td>${ book.regdate }</td>
 			</tr>
 		</c:forEach>
 	</c:if>	
@@ -125,7 +123,7 @@ ${ list }
 	<table border="1" width="90%">
 		<tr>
 			<td align="center">
-				<%@include file="/PageNavi.jsp" %>
+				<%@include file="../common/PageNavi.jsp" %>
 			</td>
 		</tr>
 	</table>

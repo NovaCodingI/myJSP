@@ -49,15 +49,20 @@ public class BookService {
 	/**
 	 * 도서 정보 입력
 	 */
-	public void insert(String title, String author) {
-		Book book = new Book(title, author);
+//	public void insert(String title, String author) {
+	public int insert(Book book) {
+//		Book book = new Book(title, author);
 		int res = dao.insert(book);
-		if(res > 0) {
-			System.out.println(res + "건 입력 되었습니다.");
-		} else {
-			System.err.println("입력중 오류가 발생 하였습니다.");
-			System.err.println("관리자에게 문의 해주세요");
-		}
+		
+		// 서비스에서 메세지처리 해주면 좋지만 컨트롤러에서
+		// JSFunction에서 메세지 처리를 하기때문에 별도 주석처리합니다.
+//		if(res > 0) {
+//			System.out.println(res + "건 입력 되었습니다.");
+//		} else {
+//			System.err.println("입력중 오류가 발생 하였습니다.");
+//			System.err.println("관리자에게 문의 해주세요");
+//		}
+		return res;
 	}
 
 	public int delete(String noStr) {
@@ -73,7 +78,17 @@ public class BookService {
 		}
 	}
 	*/
+	public int rentBook(Book book) {
+		int res = dao.rentBook(book);
+		return res;
+	}
+	public String returnBook(Book book) {
+	    String rentYN = dao.returnBook(book); // 대여 여부를 저장할 변수
 
+	    return rentYN; // 대여 여부를 반환
+	}
+	
+	/* 옛날꺼
 	public void rentBook(int bookNo) {
 		// 대여가능한 도서인지 확인
 		String rentYN = dao.getRentYN(bookNo);
@@ -93,7 +108,8 @@ public class BookService {
 			System.out.println("관리자에게 문의 해주세요");
 		}
 	}
-
+	*/
+	/* 옛날꺼
 	public void returnBook(int bookNo) {
 		// 반납가능한 도서인지 확인
 		String rentYN = dao.getRentYN(bookNo);
@@ -112,6 +128,11 @@ public class BookService {
 			System.out.println("반납 처리 중 오류가 발생 하였습니다.");
 			System.out.println("관리자에게 문의 해주세요");
 		}
+	}
+	*/
+	
+	public Book selectOne(String no) {
+		return dao.selectOne(no);
 	}
 	
 }
